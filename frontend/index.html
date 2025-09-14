@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Krishi Officer - AI Farmer Advisory</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;700&family=Manjari:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Language Selection Modal -->
+    <div id="language-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>ഭാഷ തിരഞ്ഞെടുക്കുക / Select Language</h2>
+            <div class="language-options">
+                <button class="lang-btn" data-lang="ml">
+                    <i class="fas fa-globe"></i> മലയാളം
+                </button>
+                <button class="lang-btn" data-lang="en">
+                    <i class="fas fa-globe"></i> English
+                </button>
+                <button class="lang-btn" data-lang="hi">
+                    <i class="fas fa-globe"></i> हिंदी
+                </button>
+                <button class="lang-btn" data-lang="ta">
+                    <i class="fas fa-globe"></i> தமிழ்
+                </button>
+                <button class="lang-btn" data-lang="te">
+                    <i class="fas fa-globe"></i> తెలుగు
+                </button>
+                <button class="lang-btn" data-lang="kn">
+                    <i class="fas fa-globe"></i> ಕನ್ನಡ
+                </button>
+            </div>
+            <button id="skip-lang-btn" class="btn btn-secondary">Skip for now</button>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div id="app-container" class="app-container hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <!-- <img src="https://placehold.co/50x50?text=KrishiAI" alt="KrishiAI Logo"> -->
+                <h1>KrishiAI</h1>
+            </div>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-target="query-interface"><i class="fas fa-comment-dots"></i> <span class="nav-text">Query</span></button>
+                <button class="nav-btn" data-target="user-profile"><i class="fas fa-user"></i> <span class="nav-text">Profile</span></button>
+                <button class="nav-btn" data-target="expert-escalation"><i class="fas fa-headset"></i> <span class="nav-text">Expert</span></button>
+                <button id="lang-toggle-btn" class="nav-btn"><i class="fas fa-language"></i> <span class="nav-text">Lang</span></button>
+                <button id="contrast-toggle-btn" class="nav-btn"><i class="fas fa-adjust"></i> <span class="nav-text">Contrast</span></button>
+            </nav>
+        </header>
+
+
+    <!-- <div style="background-color: black;"> hello </div> -->
+
+        <!-- Landing Page -->
+        <main id="landing-page" class="app-page active">
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 data-ml="നിങ്ങളുടെ കൃഷിയുടെ സംശയങ്ങൾക്ക് ഉടനടി ഉത്തരം" data-en="Instant answers to your farming questions">Instant answers to your farming questions</h1>
+                    <p data-ml="നിങ്ങളുടെ വിരൽത്തുമ്പിൽ ഒരു ഡിജിറ്റൽ കൃഷി ഓഫീസർ." data-en="A Digital Krishi Officer at your fingertips.">A Digital Krishi Officer at your fingertips.</p>
+                    <button id="ask-question-btn" class="btn btn-primary" data-ml="നിങ്ങളുടെ ചോദ്യം    ചോദിക്കുക" data-en="Ask Your Question">Your Question</button>
+                </div>
+            </section>
+
+            <section class="value-proposition-section">
+                <div class="container">
+                    <h2 data-ml="ഞങ്ങളുടെ സേവനങ്ങൾ" data-en="Our Services">Our Services</h2>
+                    <div class="value-cards">
+                        <div class="value-card">
+                            <i class="fas fa-clock"></i>
+                            <h3 data-ml="24/7 ലഭ്യത" data-en="24/7 Availability">24/7 Availability</h3>
+                            <p data-ml="എപ്പോൾ വേണമെങ്കിലും എവിടെ നിന്നും ഉപദേശം നേടുക." data-en="Get advice anytime, anywhere.">Get advice anytime, anywhere.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-language"></i>
+                            <h3 data-ml="ബഹുഭാഷാ പിന്തുണ" data-en="Multilingual Support">Multilingual Support</h3>
+                            <p data-ml="നിങ്ങളുടെ പ്രാദേശിക ഭാഷയിൽ വിവരങ്ങൾ നേടുക." data-en="Access information in your regional language.">Access information in your regional language.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-seedling"></i>
+                            <h3 data-ml="വിദഗ്ദ്ധരുടെ ഉപദേശം" data-en="Expert-Backed Advice">Expert-Backed Advice</h3>
+                            <p data-ml="കൃഷി വിദഗ്ദ്ധർ അംഗീകരിച്ച വിവരങ്ങൾ." data-en="Information validated by agricultural experts.">Information validated by agricultural experts.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="feature-section">
+                <div class="container">
+                    <h2 data-ml="പ്രധാന സവിശേഷതകൾ" data-en="Key Features">Key Features</h2>
+                    <div class="feature-cards">
+                        <div class="feature-card">
+                            <img src="https://picsum.photos/100/100?random=2" alt="Text/Voice Query">
+                            <h3 data-ml="വോയിസ്/ടെക്സ്റ്റ് ചോദ്യങ്ങൾ" data-en="Voice/Text Query">Voice/Text Query</h3>
+                            <p data-ml="എളുപ്പത്തിൽ ചോദ്യങ്ങൾ ചോദിക്കുക." data-en="Easily ask questions.">Easily ask questions.</p>
+                        </div>
+                        <div class="feature-card">
+                            <img src="https://picsum.photos/100/100?random=3" alt="Image Analysis">
+                            <h3 data-ml="ചിത്ര വിശകലനം" data-en="Image Analysis">Image Analysis</h3>
+                            <p data-ml="രോഗങ്ങൾ തിരിച്ചറിയാൻ ചിത്രങ്ങൾ അപ്‌ലോഡ് ചെയ്യുക." data-en="Upload images to identify diseases.">Upload images to identify diseases.</p>
+                        </div>
+                        <div class="feature-card">
+                            <img src="https://picsum.photos/100/100?random=4" alt="Personalized Advice">
+                            <h3 data-ml="വ്യക്തിഗത ഉപദേശം" data-en="Personalized Advice">Personalized Advice</h3>
+                            <p data-ml="നിങ്ങളുടെ കൃഷിക്ക് അനുയോജ്യമായ നിർദ്ദേശങ്ങൾ." data-en="Tailored recommendations for your farm.">Tailored recommendations for your farm.</p>
+                        </div>
+                        <div class="feature-card">
+                            <img src="https://picsum.photos/100/100?random=5" alt="Expert Escalation">
+                            <h3 data-ml="വിദഗ്ദ്ധരുമായി ബന്ധപ്പെടുക" data-en="Expert Escalation">Expert Escalation</h3>
+                            <p data-ml="കൂടുതൽ സഹായം ആവശ്യമെങ്കിൽ വിദഗ്ദ്ധരുമായി സംസാരിക്കുക." data-en="Connect with experts for further assistance.">Connect with experts for further assistance.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="trust-indicators-section">
+                <div class="container">
+                    <h2 data-ml="വിശ്വാസ്യത" data-en="Trust & Partnerships">Trust & Partnerships</h2>
+                    <div class="testimonials">
+                        <div class="testimonial-card">
+                            <img src="https://i.pravatar.cc/150?img=1" alt="Farmer 1">
+                            <p data-ml="'ഈ ആപ്പ് എന്റെ കൃഷിക്ക് വലിയ സഹായമാണ്. ഉടനടി ഉത്തരങ്ങൾ ലഭിക്കുന്നു!'" data-en="'This app is a great help for my farming. I get instant answers!'">'This app is a great help for my farming. I get instant answers!'</p>
+                            <span>- രാമൻ നായർ, കർഷകൻ</span>
+                        </div>
+                        <div class="testimonial-card">
+                            <img src="https://i.pravatar.cc/150?img=2" alt="Farmer 2">
+                            <p data-ml="'രോഗങ്ങൾ തിരിച്ചറിയാനും പരിഹാരങ്ങൾ കണ്ടെത്താനും ഇത് വളരെ ഉപകാരപ്രദമാണ്.'" data-en="'It's very useful for identifying diseases and finding solutions.'">'It's very useful for identifying diseases and finding solutions.'</p>
+                            <span>- ഫാത്തിമ ബീവി, കർഷക</span>
+                        </div>
+                    </div>
+                    <div class="partnerships">
+                        <img src="https://placehold.co/120x60?text=Govt+Agri" alt="Government Agriculture Department">
+                        <img src="https://placehold.co/120x60?text=Research+Inst" alt="Agricultural Research Institute">
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Query Interface -->
+        <main id="query-interface" class="app-page">
+            <section class="query-input-section">
+                <div class="container">
+                    <h2 data-ml="നിങ്ങളുടെ ചോദ്യം ചോദിക്കുക" data-en="Ask Your Question">Ask Your Question</h2>
+                    <div class="input-area">
+                        <textarea id="query-text-input" placeholder="നിങ്ങളുടെ കൃഷി സംബന്ധമായ ചോദ്യം ഇവിടെ ടൈപ്പ് ചെയ്യുക അല്ലെങ്കിൽ വോയിസ് ഉപയോഗിക്കുക..." rows="4"></textarea>
+                        <div class="input-controls">
+                            <button id="voice-record-btn" class="btn btn-icon"><i class="fas fa-microphone"></i></button>
+                            <label for="image-upload-input" class="btn btn-icon"><i class="fas fa-camera"></i></label>
+                            <input type="file" id="image-upload-input" accept="image/*" hidden>
+                            <button id="submit-query-btn" class="btn btn-primary" data-ml="ചോദ്യം സമർപ്പിക്കുക" data-en="Submit Query">Submit Query</button>
+                        </div>
+                        <div id="voice-waveform" class="voice-waveform hidden"></div>
+                        <div id="image-preview" class="image-preview hidden">
+                            <img src="" alt="Uploaded Image">
+                            <button class="remove-image-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="drag-drop-area" id="drag-drop-area">
+                            <p data-ml="ചിത്രങ്ങൾ ഇവിടെ വലിച്ചിടുക അല്ലെങ്കിൽ ക്ലിക്ക് ചെയ്യുക" data-en="Drag & drop images here or click to upload">Drag & drop images here or click to upload</p>
+                        </div>
+                    </div>
+                    <div class="quick-suggestions">
+                        <span data-ml="പെട്ടെന്നുള്ള ചോദ്യങ്ങൾ:" data-en="Quick Suggestions:">Quick Suggestions:</span>
+                        <button class="suggestion-chip" data-ml="കീടബാധ" data-en="Pest infestation">Pest infestation</button>
+                        <button class="suggestion-chip" data-ml="വളപ്രയോഗം" data-en="Fertilization">Fertilization</button>
+                        <button class="suggestion-chip" data-ml="വിളവ് വർദ്ധിപ്പിക്കാൻ" data-en="To increase yield">To increase yield</button>
+                        <button class="suggestion-chip" data-ml="മണ്ണ് പരിശോധന" data-en="Soil testing">Soil testing</button>
+                    </div>
+
+                    <div class="context-panel">
+                        <h3 data-ml="കൂടുതൽ വിവരങ്ങൾ (ഓപ്ഷണൽ)" data-en="Additional Context (Optional)">Additional Context (Optional)</h3>
+                        <div class="form-group">
+                            <label for="location" data-ml="സ്ഥലം:" data-en="Location:">Location:</label>
+                            <input type="text" id="location" placeholder="ഉദാ: പാലക്കാട്">
+                        </div>
+                        <div class="form-group">
+                            <label for="crop-type" data-ml="വിളയുടെ തരം:" data-en="Crop Type:">Crop Type:</label>
+                            <input type="text" id="crop-type" placeholder="ഉദാ: നെല്ല്">
+                        </div>
+                        <div class="form-group">
+                            <label for="farm-size" data-ml="കൃഷിഭൂമിയുടെ വലുപ്പം:" data-en="Farm Size:">Farm Size:</label>
+                            <input type="text" id="farm-size" placeholder="ഉദാ: 2 ഏക്കർ">
+                        </div>
+                        <div class="form-group">
+                            <label for="season" data-ml="കൃഷി സീസൺ:" data-en="Season:">Season:</label>
+                            <input type="text" id="season" placeholder="ഉദാ: മൺസൂൺ">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="response-display" class="response-display hidden">
+                <div class="container">
+                    <h2 data-ml="ഉത്തരം" data-en="Answer">Answer</h2>
+                    <div id="loading-indicator" class="loading-indicator hidden">
+                        <div class="spinner"></div>
+                        <p data-ml="നിങ്ങളുടെ ചോദ്യം വിശകലനം ചെയ്യുന്നു..." data-en="Analyzing your question...">Analyzing your question...</p>
+                    </div>
+                    <div id="ai-response-content" class="ai-response-content">
+                        <!-- AI response will be injected here -->
+                        <p class="main-advice" data-ml="നിങ്ങളുടെ ചോദ്യത്തിന് ഉത്തരം: നെല്ലിന് സാധാരണയായി കാണുന്ന ഒരു രോഗമാണ് ബ്ലൈറ്റ്. ഇതിന് ഫംഗസ് നാശിനി ഉപയോഗിക്കുക. രോഗം വരാതിരിക്കാൻ വിത്ത് ശുദ്ധീകരിക്കുകയും ശരിയായ അകലത്തിൽ നടുകയും ചെയ്യുക." data-en="Answer to your question: Blight is a common disease in paddy. Use fungicide for this. To prevent the disease, purify seeds and plant at proper spacing.">Answer to your question: Blight is a common disease in paddy. Use fungicide for this. To prevent the disease, purify seeds and plant at proper spacing.</p>
+                        <div class="visual-aids">
+                            <img src="https://placehold.co/400x250?text=Diagram/Infographic" alt="Visual Aid">
+                            <p data-ml="ബ്ലൈറ്റ് രോഗം ബാധിച്ച നെല്ലിന്റെ ചിത്രം." data-en="Image of paddy affected by blight disease.">Image of paddy affected by blight disease.</p>
+                        </div>
+                        <h3 data-ml="പ്രവർത്തന ഘട്ടങ്ങൾ" data-en="Action Steps">Action Steps</h3>
+                        <ol>
+                            <li data-ml="രോഗം ബാധിച്ച ചെടികൾ നീക്കം ചെയ്യുക." data-en="Remove affected plants.">Remove affected plants.</li>
+                            <li data-ml="ശുപാർശ ചെയ്യുന്ന ഫംഗസ് നാശിനി ഉപയോഗിക്കുക." data-en="Apply recommended fungicide.">Apply recommended fungicide.</li>
+                            <li data-ml="കൃത്യമായ ഇടവേളകളിൽ നിരീക്ഷിക്കുക." data-en="Monitor at regular intervals.">Monitor at regular intervals.</li>
+                        </ol>
+                        <h3 data-ml="ബന്ധപ്പെട്ട വിവരങ്ങൾ" data-en="Related Resources">Related Resources</h3>
+                        <ul>
+                            <li><a href="#" data-ml="നെല്ല് കൃഷി രീതികൾ" data-en="Paddy Cultivation Methods">Paddy Cultivation Methods</a></li>
+                            <li><a href="#" data-ml="ജൈവ കീടനാശിനികൾ" data-en="Organic Pesticides">Organic Pesticides</a></li>
+                        </ul>
+                        <div class="confidence-indicator">
+                            <span data-ml="AI വിശ്വാസ്യത:" data-en="AI Confidence:">AI Confidence:</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-level" style="width: 85%;"></div>
+                            </div>
+                            <span class="confidence-value">85%</span>
+                        </div>
+                        <button id="escalate-btn" class="btn btn-secondary" data-ml="മനുഷ്യ വിദഗ്ദ്ധന്റെ സഹായം വേണോ?" data-en="Need human expert's help?">Need human expert's help?</button>
+                        <div class="feedback-system">
+                            <span data-ml="ഈ ഉത്തരം സഹായകമായിരുന്നോ?" data-en="Was this answer helpful?">Was this answer helpful?</span>
+                            <button class="feedback-btn" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                            <button class="feedback-btn" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+                            <textarea class="feedback-comment hidden" placeholder="നിങ്ങളുടെ അഭിപ്രായം രേഖപ്പെടുത്തുക..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- User Profile/History -->
+        <main id="user-profile" class="app-page">
+            <section class="profile-dashboard">
+                <div class="container">
+                    <h2 data-ml="എന്റെ പ്രൊഫൈൽ" data-en="My Profile">My Profile</h2>
+                    <div class="profile-tabs">
+                        <button class="profile-tab-btn active" data-tab="recent-queries" data-ml="സമീപകാല ചോദ്യങ്ങൾ" data-en="Recent Queries">Recent Queries</button>
+                        <button class="profile-tab-btn" data-tab="farm-profile" data-ml="കൃഷി വിവരങ്ങൾ" data-en="Farm Profile">Farm Profile</button>
+                        <button class="profile-tab-btn" data-tab="advice-history" data-ml="ഉപദേശ ചരിത്രം" data-en="Advice History">Advice History</button>
+                        <button class="profile-tab-btn" data-tab="personalized-feed" data-ml="വ്യക്തിഗത ഫീഡ്" data-en="Personalized Feed">Personalized Feed</button>
+                    </div>
+
+                    <div id="recent-queries" class="profile-tab-content active">
+                        <h3 data-ml="സമീപകാല ചോദ്യങ്ങൾ" data-en="Recent Queries">Recent Queries</h3>
+                        <div class="query-list">
+                            <div class="query-item">
+                                <p data-ml="നെല്ലിന് ബ്ലൈറ്റ് രോഗം വരാതിരിക്കാൻ എന്തുചെയ്യണം?" data-en="What to do to prevent blight disease in paddy?">What to do to prevent blight disease in paddy?</p>
+                                <span>2023-10-26</span>
+                            </div>
+                            <div class="query-item">
+                                <p data-ml="തെങ്ങിന് വളപ്രയോഗം എങ്ങനെ?" data-en="How to fertilize coconut trees?">How to fertilize coconut trees?</p>
+                                <span>2023-10-25</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="farm-profile" class="profile-tab-content">
+                        <h3 data-ml="കൃഷി വിവരങ്ങൾ" data-en="Farm Profile">Farm Profile</h3>
+                        <form class="farm-profile-form">
+                            <div class="form-group">
+                                <label for="farm-name" data-ml="കൃഷിഭൂമിയുടെ പേര്:" data-en="Farm Name:">Farm Name:</label>
+                                <input type="text" id="farm-name" value="എന്റെ കൃഷിഭൂമി">
+                            </div>
+                            <div class="form-group">
+                                <label for="farm-location" data-ml="സ്ഥലം:" data-en="Location:">Location:">Location:</label>
+                                <input type="text" id="farm-location" value="പാലക്കാട്, കേരളം">
+                            </div>
+                            <div class="form-group">
+                                <label for="main-crop" data-ml="പ്രധാന വിള:" data-en="Main Crop:">Main Crop:</label>
+                                <input type="text" id="main-crop" value="നെല്ല്">
+                            </div>
+                            <div class="form-group">
+                                <label for="farming-practice" data-ml="കൃഷി രീതി:" data-en="Farming Practice:">Farming Practice:</label>
+                                <input type="text" id="farming-practice" value="ജൈവകൃഷി">
+                            </div>
+                            <button class="btn btn-primary" data-ml="വിവരങ്ങൾ സംരക്ഷിക്കുക" data-en="Save Profile">Save Profile</button>
+                        </form>
+                    </div>
+
+                    <div id="advice-history" class="profile-tab-content">
+                        <h3 data-ml="ഉപദേശ ചരിത്രം" data-en="Advice History">Advice History</h3>
+                        <input type="search" placeholder="ചരിത്രം തിരയുക..." class="search-input">
+                        <div class="advice-list">
+                            <div class="advice-item">
+                                <p data-ml="നെല്ലിലെ ബ്ലൈറ്റ് രോഗത്തിനുള്ള പരിഹാരം." data-en="Solution for blight disease in paddy.">Solution for blight disease in paddy.</p>
+                                <span>2023-10-26</span>
+                                <button class="btn btn-secondary btn-small" data-ml="കാണുക" data-en="View">View</button>
+                            </div>
+                            <div class="advice-item">
+                                <p data-ml="തെങ്ങിന് ജൈവ വളപ്രയോഗം." data-en="Organic fertilization for coconut.">Organic fertilization for coconut.</p>
+                                <span>2023-10-25</span>
+                                <button class="btn btn-secondary btn-small" data-ml="കാണുക" data-en="View">View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="personalized-feed" class="profile-tab-content">
+                        <h3 data-ml="വ്യക്തിഗത ഫീഡ്" data-en="Personalized Feed">Personalized Feed</h3>
+                        <div class="feed-item">
+                            <h4 data-ml="കാലാവസ്ഥാ മുന്നറിയിപ്പ്:" data-en="Weather Alert:">Weather Alert:</h4>
+                            <p data-ml="അടുത്ത 24 മണിക്കൂറിനുള്ളിൽ കനത്ത മഴയ്ക്ക് സാധ്യത." data-en="Heavy rainfall expected in the next 24 hours.">Heavy rainfall expected in the next 24 hours.</p>
+                        </div>
+                        <div class="feed-item">
+                            <h4 data-ml="പുതിയ സർക്കാർ പദ്ധതി:" data-en="New Government Scheme:">New Government Scheme:</h4>
+                            <p data-ml="കർഷകർക്ക് സബ്സിഡി നിരക്കിൽ വിത്തുകൾ." data-en="Subsidized seeds for farmers.">Subsidized seeds for farmers.</p>
+                        </div>
+                        <div class="feed-item">
+                            <h4 data-ml="വിള നുറുങ്ങുകൾ:" data-en="Crop Tips:">Crop Tips:</h4>
+                            <p data-ml="നെല്ല് നടുന്നതിന് മുമ്പ് മണ്ണ് പരിശോധന നടത്തുക." data-en="Perform soil testing before paddy cultivation.">Perform soil testing before paddy cultivation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Expert Escalation Portal -->
+        <main id="expert-escalation" class="app-page">
+            <section class="expert-portal-section">
+                <div class="container">
+                    <h2 data-ml="വിദഗ്ദ്ധരുമായി ബന്ധപ്പെടുക" data-en="Connect with Experts">Connect with Experts</h2>
+                    <p data-ml="നിങ്ങളുടെ ചോദ്യത്തിന് AI നൽകിയ ഉത്തരം തൃപ്തികരമല്ലെങ്കിൽ, ഒരു മനുഷ്യ വിദഗ്ദ്ധന്റെ സഹായം തേടാം." data-en="If the AI's answer to your question is not satisfactory, you can request assistance from a human expert.">If the AI's answer to your question is not satisfactory, you can request assistance from a human expert.</p>
+                    <form class="escalation-form">
+                        <div class="form-group">
+                            <label for="escalation-query" data-ml="നിങ്ങളുടെ ചോദ്യം:" data-en="Your Question:">Your Question:</label>
+                            <textarea id="escalation-query" rows="5" placeholder="നിങ്ങളുടെ ചോദ്യം ഇവിടെ വിശദീകരിക്കുക..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="escalation-contact" data-ml="ബന്ധപ്പെടാനുള്ള നമ്പർ/ഇമെയിൽ:" data-en="Contact Number/Email:">Contact Number/Email:</label>
+                            <input type="text" id="escalation-contact" placeholder="ഉദാ: 9876543210">
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-ml="വിദഗ്ദ്ധ സഹായം അഭ്യർത്ഥിക്കുക" data-en="Request Expert Help">Request Expert Help</button>
+                    </form>
+                    <div class="expert-info">
+                        <h3 data-ml="കൃഷി ഓഫീസർമാർക്കുള്ള പോർട്ടൽ" data-en="Portal for Agri Officers">Portal for Agri Officers</h3>
+                        <p data-ml="വിദഗ്ദ്ധർക്ക് ലോഗിൻ ചെയ്യാനും ചോദ്യങ്ങൾ കാണാനും കഴിയും." data-en="Experts can log in to view escalated queries.">Experts can log in to view escalated queries.</p>
+                        <a href="#" class="btn btn-secondary" data-ml="വിദഗ്ദ്ധ ലോഗിൻ" data-en="Expert Login">Expert Login</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2023 KrishiAI. <span data-ml="എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം." data-en="All rights reserved.">All rights reserved.</span></p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
