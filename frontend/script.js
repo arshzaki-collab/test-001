@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('krishi_lang_chosen', 'true');
             applyLanguage(currentLang);
             hideLanguageModal();
-            console.log("--current langauge clicked--->", currentLang)
+            console.log("--current ## --langauge clicked--->", currentLang)
         });
     });
 
